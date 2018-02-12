@@ -25,8 +25,6 @@ object rabbitmq extends  App{
   val consumer = new DefaultConsumer(channel) {
     override def handleDelivery(consumerTag: String, envelope: Envelope, properties: BasicProperties, body: Array[Byte]) {
       Dbcontext.Insert(new Message(fromBytes(body)))
-      println("received: " + fromBytes(body))
-      println(Dbcontext.GetAllData().toString())
     }
   }
   channel.basicConsume(queue, true, consumer)
@@ -47,10 +45,7 @@ object rabbitmq extends  App{
 
   server.start()
 
-  println("Open localHost:8000 to get the data & Hit any key to exit...")
-
-  System.in.read()
-  server.stop(0)
+  println("Open localHost:8000 to get the data ..")
 }
 
 
